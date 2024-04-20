@@ -18,13 +18,12 @@ public class PiggyBank {
 
     //Class variables
     public static double[] coinValues = {0.05, 0.10, 0.25, 1, 2};
-    public static double bankBalance;
+    public static double bankBalance = 200;
 
     //Constructors
-
     public PiggyBank() {
         bankBalance = 0;
-        tag = "Custom";
+        tag = "";
         name = "";
         volume = 0;
         money = 0;
@@ -39,23 +38,6 @@ public class PiggyBank {
     }
 
     public PiggyBank(String _tag) {
-        bankBalance = 0;
-        tag = _tag;
-        name = "";
-        volume = 0;
-        money = 0;
-        coins = new int[5];
-        amountOfCoins = 0;
-        canGainInterest = false;
-        canWithdraw = false;
-        canInvest = false;
-        capacity = 0;
-        cost = 0;
-        sellCost = 0;
-    }
-
-    public PiggyBank(String _tag, double _bankBalance) {
-        bankBalance = _bankBalance;
         if (!_tag.equals("INVALID")) {
             tag = _tag;
             name = tag + " Piggy Bank";
@@ -87,11 +69,23 @@ public class PiggyBank {
 
             sellCost = (int) (0.8 * cost);
             capacity = (int) (volume / 0.08);
+        } else {
+            tag = _tag;
+            name = "";
+            volume = 0;
+            money = 0;
+            coins = new int[5];
+            amountOfCoins = 0;
+            canGainInterest = false;
+            canWithdraw = false;
+            canInvest = false;
+            capacity = 0;
+            cost = 0;
+            sellCost = 0;
         }
     }
 
-    public PiggyBank(double _bankBalance, String _name, int _volume, boolean _canGainInterest, boolean _canWithdraw, boolean _canInvest) {
-        bankBalance = _bankBalance;
+    public PiggyBank(String _name, int _volume, boolean _canGainInterest, boolean _canWithdraw, boolean _canInvest) {
         tag = "Custom";
         name = _name;
         volume = _volume;
