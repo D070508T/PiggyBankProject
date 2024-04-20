@@ -173,13 +173,15 @@ public class PiggyBank {
 
         value = coinValues[type-1];
 
-        if (bankBalance >= value) {
+        if (bankBalance < value) {
+            System.out.println("You do not have enough money.");
+        } else if (spaceLeft() == 0) {
+            System.out.println("You do not have enough space in this piggy bank.");
+        } else {
             coins[type - 1] += amount;
             amountOfCoins += amount;
             updateMoney();
             bankBalance-= value * amount;
-        } else {
-            System.out.println("You do not have enough money.");
         }
     }
 
@@ -187,15 +189,31 @@ public class PiggyBank {
     //post: doesn't return anything
     //This method allows the piggy bank to gain interest
     public void gainInterest(int percent) {
+        Scanner scanner = new Scanner(System.in);
         double amountToGain = 0.01 * percent * money;
+        double amountGained = 0;
+        int oldAmount = amountOfCoins;
+        int[] oldCoins = new int[5];
+        for (int i = 0; i < 5; i++) {
+            oldCoins[i] = coins[i];
+        }
 
         coins[0] ++;
 
         for (int i = 4; i >= 0; i--) {
-            while (amountToGain >= coinValues[i]) {
+            while (amountToGain - amountGained >= coinValues[i] && spaceLeft() > 0) {
                 coins[i]++;
                 amountOfCoins++;
-                amountToGain -= coinValues[i];
+                amountGained += coinValues[i];
+            }
+        }
+
+        if (amountGained != amountToGain) {
+            System.out.println("You cannot add $" + amountToGain + ". Would you like to add $" + amountGained + " instead?");
+
+            if (!scanner.nextLine().equals("y")) {
+                coins = oldCoins;
+                amountOfCoins = oldAmount;
             }
         }
 
@@ -274,7 +292,6 @@ public class PiggyBank {
             }
 
             updateMoney();
-
         } else {
             System.out.println("You do not have enough money.");
         }
