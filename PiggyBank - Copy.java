@@ -175,7 +175,7 @@ public class PiggyBank {
 
         if (bankBalance < value) {
             System.out.println("You do not have enough money.");
-        } else if (spaceLeft() == 0) {
+        } else if (spaceLeft() < 1) {
             System.out.println("You do not have enough space in this piggy bank.");
         } else {
             coins[type - 1] += amount;
@@ -188,36 +188,8 @@ public class PiggyBank {
     //pre: takes in a double, percent
     //post: doesn't return anything
     //This method allows the piggy bank to gain interest
-    public void gainInterest(int percent) {
-        Scanner scanner = new Scanner(System.in);
-        double amountToGain = 0.01 * percent * money;
-        double amountGained = 0;
-        int oldAmount = amountOfCoins;
-        int[] oldCoins = new int[5];
-        for (int i = 0; i < 5; i++) {
-            oldCoins[i] = coins[i];
-        }
-
-        coins[0] ++;
-
-        for (int i = 4; i >= 0; i--) {
-            while (amountToGain - amountGained >= coinValues[i] && spaceLeft() > 0) {
-                coins[i]++;
-                amountOfCoins++;
-                amountGained += coinValues[i];
-            }
-        }
-
-        if (amountGained != amountToGain) {
-            System.out.println("You cannot add $" + amountToGain + ". Would you like to add $" + amountGained + " instead?");
-
-            if (!scanner.nextLine().equals("y")) {
-                coins = oldCoins;
-                amountOfCoins = oldAmount;
-            }
-        }
-
-        updateMoney();
+    public void collectInterest(int percent) {
+        changeCoinsByAmount(0.1*percent*money, true);
     }
 
     //pre: doesn't take in anything
@@ -254,7 +226,7 @@ public class PiggyBank {
                     if (coins[i] > 0) {
                         if (currentAmount + coinValues[i] <= amount) {
                             currentAmount += coinValues[i];
-                            if (add) {
+                            if (add && spaceLeft() > 0) {
                                 coins[i]++;
                                 amountOfCoins++;
                             } else {
