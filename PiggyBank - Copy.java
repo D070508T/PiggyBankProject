@@ -38,6 +38,7 @@ public class PiggyBank {
     }
 
     public PiggyBank(String _tag) {
+        tag = _tag;
         if (tag.equals("Savings")) {
             cost = 50;
             volume = 8;
@@ -85,6 +86,7 @@ public class PiggyBank {
         sellCost = (int)(0.8*cost);
     }
 
+    // Getters and setters
     public int getCost() {
         return cost;
     }
@@ -151,9 +153,10 @@ public class PiggyBank {
         return bankBalance;
     }
 
+    //pre: doesn't take in anything
+    //post: doesn't return anything
+    //This method goes through all the coins to update the money
     public void updateMoney() {
-        double oldMoney = money;
-
         money = 0;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < coins[i]; j++) {
@@ -162,6 +165,9 @@ public class PiggyBank {
         }
     }
 
+    //pre: takes in an integer, amount, and an integer, type
+    //post: doesn't return anything
+    //This method adds coins of the type and amount chosen by the user
     public void addCoins(int amount, int type) {
         double value = 0;
 
@@ -177,8 +183,11 @@ public class PiggyBank {
         }
     }
 
-    public void gainInterest(double percent) {
-        double amountToGain = percent * money;
+    //pre: takes in a double, percent
+    //post: doesn't return anything
+    //This method allows the piggy bank to gain interest
+    public void gainInterest(int percent) {
+        double amountToGain = 0.01 * percent * money;
 
         coins[0] ++;
 
@@ -193,6 +202,9 @@ public class PiggyBank {
         updateMoney();
     }
 
+    //pre: doesn't take in anything
+    //post: doesn't return anything
+    //This method allows the piggy bank to invest 30% of their money for a 50/50 chance of profit
     public void invest() {
         Random random = new Random();
 
@@ -207,6 +219,9 @@ public class PiggyBank {
         }
     }
 
+    //pre: takes in a double, amount, and a boolean, add
+    //post: doesn't return anything
+    //This method changes (adds or removes) coins from the piggy bank by amount
     public void changeCoinsByAmount(double amount, boolean add) {
         if ((add && bankBalance >= amount) || (!add && money >= amount)) {
             double currentAmount = 0;
@@ -265,6 +280,9 @@ public class PiggyBank {
         }
     }
 
+    //pre: takes in a String, ability
+    //post: doesn't return anything
+    //This method allows the piggy bank to upgrade its abilities
     public void upgradeAbility(String ability) {
         if (bankBalance >= 50) {
             if (ability.equals("Interest")) {
@@ -281,7 +299,9 @@ public class PiggyBank {
         }
     }
 
-
+    //pre: doesn't take in anything
+    //post: returns a String
+    //This method overrides the toString method to correctly display the piggy bank's data
     public String toString() {
         return tag + ", " + name + "\n" +
                 cost + ", " + sellCost + "\n" +
@@ -290,6 +310,9 @@ public class PiggyBank {
                 canGainInterest + ", " + canWithdraw + ", " + canInvest + "\n";
     }
 
+    //pre: takes in a String, _name, and an array of PiggyBank objects, piggyBanks
+    //post: returns a PiggyBank object
+    //This class method finds and returns the PiggyBank object that matches the name given in the parameter, and returns a PiggyBank with a tag "INVALID" if there is no PiggyBank in the array with that name
     public static PiggyBank getPiggyBank(String _name, PiggyBank[] piggyBanks) {
         for (PiggyBank piggyBank : piggyBanks) {
             if (piggyBank.getName().equals(_name)) {
