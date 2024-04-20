@@ -38,51 +38,33 @@ public class PiggyBank {
     }
 
     public PiggyBank(String _tag) {
-        if (!_tag.equals("INVALID")) {
-            tag = _tag;
-            name = tag + " Piggy Bank";
-            money = 0;
-            coins = new int[5];
-            amountOfCoins = 0;
-
-            if (tag.equals("Savings")) {
-                cost = 50;
-                volume = 8;
-                canGainInterest = true;
-                canWithdraw = false;
-                canInvest = false;
-            } else if (tag.equals("Spending")) {
-                cost = 10;
-                volume = 4;
-                canGainInterest = false;
-                canWithdraw = true;
-                canInvest = false;
-            } else if (tag.equals("Investment")) {
-                cost = 30;
-                volume = 6;
-                canGainInterest = false;
-                canWithdraw = false;
-                canInvest = true;
-            }
-
-            coins = new int[5];
-
-            sellCost = (int) (0.8 * cost);
-            capacity = (int) (volume / 0.08);
-        } else {
-            tag = _tag;
-            name = "";
-            volume = 0;
-            money = 0;
-            coins = new int[5];
-            amountOfCoins = 0;
-            canGainInterest = false;
+        if (tag.equals("Savings")) {
+            cost = 50;
+            volume = 8;
+            canGainInterest = true;
             canWithdraw = false;
             canInvest = false;
-            capacity = 0;
-            cost = 0;
-            sellCost = 0;
+        } else if (tag.equals("Spending")) {
+            cost = 10;
+            volume = 4;
+            canGainInterest = false;
+            canWithdraw = true;
+            canInvest = false;
+        } else if (tag.equals("Investment")) {
+            cost = 30;
+            volume = 6;
+            canGainInterest = false;
+            canWithdraw = false;
+            canInvest = true;
         }
+
+        tag = _tag;
+        name = tag + " Piggy Bank";
+        money = 0;
+        coins = new int[5];
+        amountOfCoins = 0;
+        sellCost = (int) (0.8 * cost);
+        capacity = (int) (volume / 0.08);
     }
 
     public PiggyBank(String _name, int _volume, boolean _canGainInterest, boolean _canWithdraw, boolean _canInvest) {
