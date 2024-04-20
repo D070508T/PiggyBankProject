@@ -262,12 +262,18 @@ public class PiggyBank {
     }
 
     public void upgradeAbility(String ability) {
-        if (ability.equals("Interest")) {
-            canGainInterest = true;
-        } else if (ability.equals("Withdraw")) {
-            canWithdraw = true;
-        } else if (ability.equals("Invest")) {
-            canInvest = true;
+        if (bankBalance >= 50) {
+            if (ability.equals("Interest")) {
+                canGainInterest = true;
+            } else if (ability.equals("Withdraw")) {
+                canWithdraw = true;
+            } else if (ability.equals("Invest")) {
+                canInvest = true;
+            }
+
+            bankBalance -= 50;
+        } else {
+            System.out.println("You do not have enough money");
         }
     }
 
