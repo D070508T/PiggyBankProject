@@ -20,8 +20,14 @@ public class PiggyBank {
     public static double[] coinValues = {0.05, 0.10, 0.25, 1, 2};
     public static double bankBalance;
 
-    //Constructor for basic Piggy Banks
+    //Constructors
+
     public PiggyBank(String _tag) {
+        tag = _tag;
+    }
+
+    public PiggyBank(String _tag, double _bankBalance) {
+        bankBalance = _bankBalance;
         if (!_tag.equals("INVALID")) {
             tag = _tag;
             name = tag + " Piggy Bank";
@@ -56,8 +62,8 @@ public class PiggyBank {
         }
     }
 
-    //Constructor for custom Piggy Banks
-    public PiggyBank(String _name, int _volume, boolean _canGainInterest, boolean _canWithdraw, boolean _canInvest) {
+    public PiggyBank(double _bankBalance, String _name, int _volume, boolean _canGainInterest, boolean _canWithdraw, boolean _canInvest) {
+        bankBalance = _bankBalance;
         tag = "Custom";
         name = _name;
         volume = _volume;
@@ -75,13 +81,13 @@ public class PiggyBank {
         sellCost = (int)(0.8*cost);
     }
 
+    public int getCost() {
+        return cost;
+    }
+
     public void setCost(int Cost) {
         cost = Cost;
         sellCost = (int)(0.8*cost);
-    }
-
-    public int getCost() {
-        return cost;
     }
 
     public int getSellCost() {
@@ -97,7 +103,6 @@ public class PiggyBank {
         return volume;
     }
 
-
     public int getCapacity() {
         return capacity;
     }
@@ -110,39 +115,36 @@ public class PiggyBank {
         return coins;
     }
 
-
     public void setName(String Name) {
         name = Name;
     }
-
 
     public String getName() {
         return name;
     }
 
-
     public String getTag() {
         return tag;
     }
-
 
     public boolean canGainInterest() {
         return canGainInterest;
     }
 
-
     public boolean canWithdraw() {
         return canWithdraw;
     }
-
 
     public boolean canInvest() {
         return canInvest;
     }
 
-
     public int spaceLeft() {
         return capacity - amountOfCoins;
+    }
+
+    public static double getBalance() {
+        return bankBalance;
     }
 
     public void updateMoney() {
@@ -156,8 +158,7 @@ public class PiggyBank {
         }
     }
 
-
-    public void addCoins(int amount, int type, double bankBalance) {
+    public void addCoins(int amount, int type) {
         double value = 0;
 
         value = coinValues[type-1];
@@ -165,44 +166,12 @@ public class PiggyBank {
         if (bankBalance >= value) {
             coins[type - 1] += amount;
             amountOfCoins += amount;
+            updateMoney();
+            bankBalance-= value * amount;
         } else {
             System.out.println("You do not have enough money.");
         }
-
-        updateMoney();
     }
-//
-//    public void withdraw(double amount) {
-//        double currentAmount = 0;
-//        int oldAmountOfCoins = amountOfCoins;
-//        int[] newCoins = new int[5];
-//        for (int i = 0; i < 5; i++) {
-//            newCoins[i] = coins[i];
-//        }
-//
-//        for (int i = 4; i >= 0; i--) {
-//            for (int j = 0; currentAmount < amount && j < coins[i]; j++) {
-//                if (coins[i] > 0) {
-//                    if (currentAmount + coinValues[i] <= amount) {
-//                        currentAmount += coinValues[i];
-//                        coins[i]--;
-//                        amountOfCoins--;
-//                        if (currentAmount == amount) {
-//                            j = coins[i];
-//                            i = -1;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//        if (currentAmount != amount) {
-//            coins = newCoins;
-//            amountOfCoins = oldAmountOfCoins;
-//        }
-//
-//        updateMoney();
-//    }
 
     public void gainInterest(double percent) {
         double amountToGain = percent * money;
@@ -217,12 +186,10 @@ public class PiggyBank {
             }
         }
 
-        double balance = 0;
-
         updateMoney();
     }
 
-    public void invest(double bankBalance) {
+    public void invest() {
         Random random = new Random();
 
         double amountOfMoney = 0.3*money;
@@ -230,13 +197,13 @@ public class PiggyBank {
         int randInt = random.nextInt(1, 3);
 
         if (randInt == 1) {
-            changeCoinsByAmount(amountOfMoney, true, bankBalance);
+            changeCoinsByAmount(amountOfMoney, true);
         } else {
-            changeCoinsByAmount(amountOfMoney, false, bankBalance);
+            changeCoinsByAmount(amountOfMoney, false);
         }
     }
 
-    public void changeCoinsByAmount(double amount, boolean add, double bankBalance) {
+    public void changeCoinsByAmount(double amount, boolean add) {
         if ((add && bankBalance >= amount) || (!add && money >= amount)) {
             double currentAmount = 0;
             int oldAmountOfCoins = amountOfCoins;
@@ -278,6 +245,12 @@ public class PiggyBank {
                 if (!scanner.nextLine().equalsIgnoreCase("y")) {
                     coins = newCoins;
                     amountOfCoins = oldAmountOfCoins;
+                }
+            } else {
+                if (add) {
+                    bankBalance -= amount;
+                } else {
+                    bankBalance += amount;
                 }
             }
 
