@@ -1,28 +1,19 @@
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         double bankBalance = 200;
-        PiggyBank bank = new PiggyBank("Savings");
-        System.out.println(bank.getMoney());
+        PiggyBank[] banks = new PiggyBank[3];
 
-        System.out.println(bankBalance);
-        bank.addCoins(10, 5, bankBalance);
-        bank.addCoins(5, 2, bankBalance);
-        System.out.println(bankBalance);
-        System.out.println("Adding 10 toonies and 5 dimes ($20.50)\n\n");
+        banks[0] = new PiggyBank("Savings");
+        banks[1] = new PiggyBank("Investment");
+        banks[2] = new PiggyBank("Spending");
+        if (PiggyBank.getPiggyBank("Savings Piggy Bank", banks).getTag().equals("INVALID")) {
+            banks[2] = new PiggyBank("Savings");
+        } else {
+            banks[2] = new PiggyBank("Sample", 300, true, true, true);
+        }
 
-        System.out.println(bankBalance);
-        bank.gainInterest(0.02);
-        System.out.println(bankBalance);
-        System.out.println("Gaining interest 2%\n\n");
-
-        System.out.println(bankBalance);
-        bank.changeCoinsByAmount(10.40, false, bankBalance);
-        System.out.println(bankBalance);
-        System.out.println("Withdrawing $10.40\n\n");
-
-        System.out.println(bankBalance);
-        bank.gainInterest(0.1);
-        System.out.println(bankBalance);
-        System.out.println("Gaining interest 1%\n\n");
+        System.out.println(Arrays.toString(banks));
     }
 }
