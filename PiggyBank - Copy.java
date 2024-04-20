@@ -290,13 +290,28 @@ public class PiggyBank {
 
     //pre: doesn't take in anything
     //post: returns a String
-    //This method overrides the toString method to correctly display the piggy bank's data
+    //This method displays the PiggyBank object in an organized way
     public String toString() {
-        return tag + ", " + name + "\n" +
-                cost + ", " + sellCost + "\n" +
-                volume + ", " + capacity + "\n" +
-                money + ", " + coins[0] + ", " + coins[1] + ", " + coins[2] + ", " + coins[3] + ", " + "\n" +
-                canGainInterest + ", " + canWithdraw + ", " + canInvest + "\n";
+        return
+                "Tag: " + tag + "\n" +
+                        "Name: " + name + "\n\n" +
+
+                        "Cost: $" + cost + "\n" +
+                        "Sell cost: $" + sellCost + "\n\n" +
+
+                        "Volume: " + volume + " cubic inches\n" +
+                        "Capacity: " + capacity + " coins\n\n" +
+
+                        "Money: $" + money + "\n" +
+                        "Amount of nickels: " + coins[0] + "\n" +
+                        "Amount of dimes: " + coins[1] + "\n" +
+                        "Amount of quarters: " + coins[2] + "\n" +
+                        "Amount of loonies: " + coins[3] + "\n" +
+                        "Amount of toonies: " + coins[4] + "\n\n" +
+
+                        "Can gain interest?: " + canGainInterest + "\n" +
+                        "Can withdraw?: " + canWithdraw + "\n" +
+                        "Can invest?: " + canInvest + "\n\n";
     }
 
     //pre: takes in a String, _name, and an array of PiggyBank objects, piggyBanks
