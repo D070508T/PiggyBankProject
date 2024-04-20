@@ -39,8 +39,19 @@ public class PiggyBank {
     }
 
     public PiggyBank(String _tag) {
+        bankBalance = 0;
         tag = _tag;
         name = "";
+        volume = 0;
+        money = 0;
+        coins = new int[5];
+        amountOfCoins = 0;
+        canGainInterest = false;
+        canWithdraw = false;
+        canInvest = false;
+        capacity = 0;
+        cost = 0;
+        sellCost = 0;
     }
 
     public PiggyBank(String _tag, double _bankBalance) {
@@ -310,5 +321,14 @@ public class PiggyBank {
             }
         }
         return new PiggyBank("INVALID");
+    }
+
+    public static boolean isTherePiggyBank(String _name, PiggyBank[] banks) {
+        for (PiggyBank bank : banks) {
+            if (bank.getName().equals(_name)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
