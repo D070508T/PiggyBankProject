@@ -22,6 +22,22 @@ public class PiggyBank {
 
     //Constructors
 
+    public PiggyBank() {
+        bankBalance = 0;
+        tag = "Custom";
+        name = "";
+        volume = 0;
+        money = 0;
+        coins = new int[5];
+        amountOfCoins = 0;
+        canGainInterest = false;
+        canWithdraw = false;
+        canInvest = false;
+        capacity = 0;
+        cost = 0;
+        sellCost = 0;
+    }
+
     public PiggyBank(String _tag) {
         tag = _tag;
     }
