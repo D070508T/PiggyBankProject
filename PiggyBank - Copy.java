@@ -316,13 +316,4 @@ public class PiggyBank {
         }
         return new PiggyBank("INVALID");
     }
-
-    public static boolean isTherePiggyBank(String _name, PiggyBank[] banks) {
-        for (PiggyBank bank : banks) {
-            if (bank.getName().equals(_name)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
