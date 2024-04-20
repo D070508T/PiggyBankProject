@@ -40,6 +40,7 @@ public class PiggyBank {
 
     public PiggyBank(String _tag) {
         tag = _tag;
+        name = "";
     }
 
     public PiggyBank(String _tag, double _bankBalance) {
