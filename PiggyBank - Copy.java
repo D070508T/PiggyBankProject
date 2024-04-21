@@ -190,7 +190,7 @@ public class PiggyBank {
     //post: doesn't return anything
     //This method allows the piggy bank to gain interest
     public void collectInterest(int percent) {
-        changeCoinsByAmount(0.1*percent*money, true);
+        changeCoinsByAmount(0.1*percent*money, true, true);
     }
 
     //pre: doesn't take in anything
@@ -204,16 +204,16 @@ public class PiggyBank {
         int randInt = random.nextInt(1, 3);
 
         if (randInt == 1) {
-            changeCoinsByAmount(amountOfMoney, true);
+            changeCoinsByAmount(amountOfMoney, true, true);
         } else {
-            changeCoinsByAmount(amountOfMoney, false);
+            changeCoinsByAmount(amountOfMoney, false, false);
         }
     }
 
     //pre: takes in a double, amount, and a boolean, add
     //post: doesn't return anything
     //This method changes (adds or removes) coins from the piggy bank by amount
-    public void changeCoinsByAmount(double amount, boolean add) {
+    public void changeCoinsByAmount(double amount, boolean add, boolean ask) {
         if ((add && bankBalance >= amount) || (!add && money >= amount)) {
             double currentAmount = 0;
             int oldAmountOfCoins = amountOfCoins;
@@ -240,17 +240,19 @@ public class PiggyBank {
             }
 
             if (currentAmount != amount) {
-                if (add) {
-                    System.out.print("Cannot add $" + amount + ". Would you like to add $" + currentAmount + " instead? (y/n): ");
-                } else {
-                    System.out.print("Cannot remove $" + amount + " from this bank. Would you like to remove $" + currentAmount + " instead? (y/n): ");
-                }
+                if (ask) {
+                    if (add) {
+                        System.out.print("Cannot add $" + amount + ". Would you like to add $" + currentAmount + " instead? (y/n): ");
+                    } else {
+                        System.out.print("Cannot remove $" + amount + " from this bank. Would you like to remove $" + currentAmount + " instead? (y/n): ");
+                    }
 
-                Scanner scanner = new Scanner(System.in);
+                    Scanner scanner = new Scanner(System.in);
 
-                if (!scanner.nextLine().equalsIgnoreCase("y")) {
-                    coins = newCoins;
-                    amountOfCoins = oldAmountOfCoins;
+                    if (!scanner.nextLine().equalsIgnoreCase("y")) {
+                        coins = newCoins;
+                        amountOfCoins = oldAmountOfCoins;
+                    }
                 }
             } else {
                 if (add) {
