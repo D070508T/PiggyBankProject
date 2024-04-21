@@ -297,7 +297,8 @@ public class PiggyBank {
     //This method displays the PiggyBank object in an organized way
     public String toString() {
         return
-                "Tag: " + tag + "\n" +
+                "---------------------------------------------\n" +
+                        "Tag: " + tag + "\n" +
                         "Name: " + name + "\n\n" +
 
                         "Cost: $" + cost + "\n" +
@@ -318,7 +319,8 @@ public class PiggyBank {
                         "Can gain interest?: " + canGainInterest + "\n" +
                         "Can withdraw?: " + canWithdraw + "\n" +
                         "Can invest?: " + canInvest + "\n\n" +
-                        "User bank balance: $" + bankBalance + "\n\n";
+                        "User bank balance: $" + bankBalance + "\n\n" +
+                        "---------------------------------------------\n\n";
     }
 
     //pre: takes in a String, _name, and an array of PiggyBank objects, piggyBanks
