@@ -18,11 +18,10 @@ public class PiggyBank {
 
     //Class variables
     public static double[] coinValues = {0.05, 0.10, 0.25, 1, 2};
-    public static double bankBalance = 200;
+    public static double bankBalance = 350;
 
     //Constructors
     public PiggyBank() {
-        bankBalance = 0;
         tag = "";
         name = "";
         volume = 0;
@@ -66,6 +65,7 @@ public class PiggyBank {
         amountOfCoins = 0;
         sellCost = (int) (0.8 * cost);
         capacity = (int) (volume / 0.08);
+        bankBalance -= cost;
     }
 
     public PiggyBank(String _name, int _volume, boolean _canGainInterest, boolean _canWithdraw, boolean _canInvest) {
@@ -84,6 +84,7 @@ public class PiggyBank {
         if (canWithdraw) {cost += 10;}
         if (canInvest) {cost += 10;}
         sellCost = (int)(0.8*cost);
+        bankBalance -= cost;
     }
 
     // Getters and setters
@@ -221,23 +222,19 @@ public class PiggyBank {
                 newCoins[i] = coins[i];
             }
 
-            for (int i = 4; i >= 0; i--) {
-                for (int j = 0; currentAmount < amount && j < coins[i]; j++) {
-                    if (coins[i] > 0) {
-                        if (currentAmount + coinValues[i] <= amount) {
-                            currentAmount += coinValues[i];
-                            if (add && spaceLeft() > 0) {
-                                coins[i]++;
-                                amountOfCoins++;
-                            } else {
-                                coins[i]--;
-                                amountOfCoins--;
-                            }
-                            if (currentAmount == amount) {
-                                j = coins[i];
-                                i = -1;
-                            }
+            for (int i = 4; i >= 0 && currentAmount < amount; i--) {
+                for (int j = 0; currentAmount < amount && j >= 0; j++) {
+                    if (currentAmount + coinValues[i] <= amount) {
+                        currentAmount += coinValues[i];
+                        if (add && spaceLeft() > 0) {
+                            coins[i]++;
+                            amountOfCoins++;
+                        } else {
+                            coins[i]--;
+                            amountOfCoins--;
                         }
+                    } else {
+                        j = -2;
                     }
                 }
             }
@@ -288,6 +285,13 @@ public class PiggyBank {
         }
     }
 
+    //pre: takes in a double, balance
+    //post: returns nothing
+    //This method sets the variable in the main for the bank balance to the correct value
+    public static void updateBalance(double balance) {
+        balance = bankBalance;
+    }
+
     //pre: doesn't take in anything
     //post: returns a String
     //This method displays the PiggyBank object in an organized way
@@ -303,6 +307,8 @@ public class PiggyBank {
                         "Capacity: " + capacity + " coins\n\n" +
 
                         "Money: $" + money + "\n" +
+                        "Amount of coins: " + amountOfCoins + "\n" +
+                        "Space left: " + (capacity - amountOfCoins) + " coins\n" +
                         "Amount of nickels: " + coins[0] + "\n" +
                         "Amount of dimes: " + coins[1] + "\n" +
                         "Amount of quarters: " + coins[2] + "\n" +
@@ -311,7 +317,8 @@ public class PiggyBank {
 
                         "Can gain interest?: " + canGainInterest + "\n" +
                         "Can withdraw?: " + canWithdraw + "\n" +
-                        "Can invest?: " + canInvest + "\n\n";
+                        "Can invest?: " + canInvest + "\n\n" +
+                        "User bank balance: $" + bankBalance + "\n\n";
     }
 
     //pre: takes in a String, _name, and an array of PiggyBank objects, piggyBanks
