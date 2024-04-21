@@ -18,7 +18,7 @@ public class PiggyBank {
 
     //Class variables
     public static double[] coinValues = {0.05, 0.10, 0.25, 1, 2};
-    public static double bankBalance = 350;
+    public static double bankBalance = 3500;
 
     //Constructors
     public PiggyBank() {
@@ -154,6 +154,14 @@ public class PiggyBank {
         return bankBalance;
     }
 
+    //pre: takes in a double, amount, and a PiggyBank, goTO
+    //post: returns nothing
+    //This method transfers money from one piggy bank to the other
+    public void transferMoney(double amount, PiggyBank goTo) {
+        changeCoinsByAmount(amount, false, false, false);
+        goTo.changeCoinsByAmount(amount, true, false, false);
+    }
+
     //pre: doesn't take in anything
     //post: doesn't return anything
     //This method goes through all the coins to update the money
@@ -190,7 +198,7 @@ public class PiggyBank {
     //post: doesn't return anything
     //This method allows the piggy bank to gain interest
     public void collectInterest(int percent) {
-        changeCoinsByAmount(0.1*percent*money, true, true);
+        changeCoinsByAmount(0.1*percent*money, true, true, false);
     }
 
     //pre: doesn't take in anything
@@ -204,16 +212,16 @@ public class PiggyBank {
         int randInt = random.nextInt(1, 3);
 
         if (randInt == 1) {
-            changeCoinsByAmount(amountOfMoney, true, true);
+            changeCoinsByAmount(amountOfMoney, true, true, false);
         } else {
-            changeCoinsByAmount(amountOfMoney, false, false);
+            changeCoinsByAmount(amountOfMoney, false, false, false);
         }
     }
 
     //pre: takes in a double, amount, and a boolean, add
     //post: doesn't return anything
     //This method changes (adds or removes) coins from the piggy bank by amount
-    public void changeCoinsByAmount(double amount, boolean add, boolean ask) {
+    public void changeCoinsByAmount(double amount, boolean add, boolean ask, boolean changeBalance) {
         if ((add && bankBalance >= amount) || (!add && money >= amount)) {
             double currentAmount = 0;
             int oldAmountOfCoins = amountOfCoins;
@@ -254,7 +262,9 @@ public class PiggyBank {
                         amountOfCoins = oldAmountOfCoins;
                     }
                 }
-            } else {
+            }
+
+            if (changeBalance) {
                 if (add) {
                     bankBalance -= amount;
                 } else {
