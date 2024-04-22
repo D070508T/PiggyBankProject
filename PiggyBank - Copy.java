@@ -1,3 +1,8 @@
+/*
+PIGGY BANK PROJECT
+David Tarandach Tabatschnic
+*/
+
 import java.util.Random;
 import java.util.Scanner;
 
