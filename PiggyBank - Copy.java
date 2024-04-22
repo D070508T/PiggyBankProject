@@ -332,7 +332,7 @@ public class PiggyBank {
                         "Can withdraw?: " + canWithdraw + "\n" +
                         "Can invest?: " + canInvest + "\n\n" +
                         "User bank balance: $" + bankBalance + "\n\n" +
-                        "---------------------------------------------\n\n";
+                        "---------------------------------------------\n";
     }
 
     //pre: takes in a String, _name, and an array of PiggyBank objects, piggyBanks
