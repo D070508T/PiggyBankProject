@@ -163,8 +163,12 @@ public class PiggyBank {
     //post: returns nothing
     //This method transfers money from one piggy bank to the other
     public void transferMoney(double amount, PiggyBank goTo) {
+        double oldMoney = goTo.getMoney();
         changeCoinsByAmount(amount, false, false, false);
         goTo.changeCoinsByAmount(amount, true, false, false);
+        if (goTo.getMoney() == oldMoney && amount != 0) {
+            changeCoinsByAmount(amount, true, false, false);
+        }
     }
 
     //pre: doesn't take in anything
